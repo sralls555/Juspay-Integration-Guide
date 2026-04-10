@@ -6,535 +6,630 @@
 <title>Checkout Suite — Juspay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#060b18;--bg-2:#0b1324;--bg-3:#101a2e;--bg-card:#0d1728;--blue:#2563eb;--blue-b:#3b82f6;--blue-glow:rgba(37,99,235,0.18);--blue-bdr:rgba(59,130,246,0.25);--teal:#0ea5e9;--green:#10b981;--amber:#f59e0b;--bdr:rgba(255,255,255,0.07);--bdr2:rgba(255,255,255,0.12);--txt:#f1f5f9;--txt2:#94a3b8;--txt3:#64748b;--font:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--rsm:6px;--rmd:10px;--rlg:16px;--rxl:20px}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--font);background:var(--bg);color:var(--txt);-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(37,99,235,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+:root {
+  --bg:       #05090f;
+  --bg-s:     #0a1018;
+  --bg-card:  #0c1322;
+  --blue:     #2563eb;
+  --blue-l:   #3b82f6;
+  --blue-xl:  #93c5fd;
+  --green:    #10b981;
+  --amber:    #f59e0b;
+  --purple:   #8b5cf6;
+  --b0: rgba(255,255,255,0.05);
+  --b1: rgba(255,255,255,0.08);
+  --b2: rgba(255,255,255,0.13);
+  --t1: #f8fafc;
+  --t2: #94a3b8;
+  --t3: #475569;
+  --t4: #334155;
+  --f: 'Plus Jakarta Sans', sans-serif;
+  --m: 'JetBrains Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--f); background: var(--bg); color: var(--t1); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-nav{position:sticky;top:0;z-index:100;background:rgba(6,11,24,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr);padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:60px}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--txt);font-size:15px;font-weight:600}
-.logo-mark{width:32px;height:32px;border-radius:8px;background:var(--blue);display:flex;align-items:center;justify-content:center}
-.logo-mark svg{width:18px;height:18px}
-.nav-center{display:flex;gap:2px}
-.nav-link{padding:7px 16px;border-radius:20px;font-size:13px;font-weight:500;color:var(--txt2);text-decoration:none;transition:all .15s}
-.nav-link:hover{color:var(--txt);background:rgba(255,255,255,.05)}
-.nav-link.active{color:var(--blue-b)}
-.nav-right{display:flex;align-items:center;gap:12px}
-.nav-badge{font-size:11px;padding:4px 12px;border-radius:20px;border:1px solid var(--bdr2);color:var(--txt3);font-weight:500}
-.btn-nav{padding:8px 18px;border-radius:var(--rmd);background:var(--blue);color:#fff;font-size:13px;font-weight:500;font-family:var(--font);border:none;cursor:pointer;text-decoration:none;transition:background .15s;display:inline-flex;align-items:center;gap:6px}
-.btn-nav:hover{background:#1d4ed8}
-
-.hero{position:relative;padding:100px 48px 80px;max-width:1000px;margin:0 auto;text-align:center;z-index:1}
-.hero-glow{position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse at center,rgba(37,99,235,0.15) 0%,transparent 70%);pointer-events:none}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:20px;border:1px solid var(--blue-bdr);background:rgba(37,99,235,0.08);font-size:12px;font-weight:500;color:var(--blue-b);margin-bottom:28px;animation:fadeUp .5s ease both}
-.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--blue-b);animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hero h1{font-size:clamp(36px,5.5vw,60px);font-weight:600;line-height:1.1;letter-spacing:-.02em;margin-bottom:22px;animation:fadeUp .5s .05s ease both}
-.hero h1 .grad{background:linear-gradient(135deg,#60a5fa 0%,#a78bfa 50%,#34d399 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero p{font-size:17px;color:var(--txt2);max-width:560px;margin:0 auto 40px;line-height:1.7;animation:fadeUp .5s .1s ease both}
-.hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;animation:fadeUp .5s .15s ease both}
-.btn-primary{padding:12px 26px;border-radius:var(--rmd);background:var(--blue);color:#fff;font-size:14px;font-weight:500;font-family:var(--font);border:none;cursor:pointer;text-decoration:none;transition:all .15s;display:inline-flex;align-items:center;gap:8px}
-.btn-primary:hover{background:#1d4ed8;transform:translateY(-1px)}
-.btn-ghost{padding:12px 26px;border-radius:var(--rmd);background:transparent;color:var(--txt);font-size:14px;font-weight:500;font-family:var(--font);border:1px solid var(--bdr2);cursor:pointer;text-decoration:none;transition:all .15s;display:inline-flex;align-items:center;gap:8px}
-.btn-ghost:hover{background:rgba(255,255,255,.05);transform:translateY(-1px)}
-
-.spectrum{max-width:860px;margin:0 auto 60px;padding:0 48px;position:relative;z-index:1;animation:fadeUp .5s .2s ease both}
-.spec-label{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3);margin-bottom:14px;text-align:center}
-.spec-track{display:flex;border-radius:var(--rlg);overflow:hidden;height:56px;border:1px solid var(--bdr2)}
-.spec-seg{flex:1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;gap:8px;text-decoration:none;transition:filter .15s;cursor:pointer}
-.spec-seg:hover{filter:brightness(1.2)}
-.ss-teal{background:rgba(16,185,129,0.08);color:#6ee7b7;border-right:1px solid var(--bdr)}
-.ss-blue{background:rgba(59,130,246,0.08);color:#93c5fd;border-right:1px solid var(--bdr)}
-.ss-amber{background:rgba(245,158,11,0.08);color:#fcd34d}
-.spec-dot{width:7px;height:7px;border-radius:50%}
-.sd-teal{background:var(--green)}
-.sd-blue{background:var(--blue-b)}
-.sd-amber{background:var(--amber)}
-.spec-ends{display:flex;justify-content:space-between;margin-top:10px;font-size:11px;color:var(--txt3)}
-
-.stats-strip{border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);background:var(--bg-2);padding:28px 48px;display:flex;justify-content:center;gap:64px;flex-wrap:wrap;margin-bottom:72px;position:relative;z-index:1}
-.stat-item{text-align:center}
-.stat-num{font-size:28px;font-weight:600;color:var(--txt);line-height:1;margin-bottom:6px}
-.stat-num span{color:var(--blue-b)}
-.stat-label{font-size:12px;color:var(--txt3);font-weight:500}
-
-.products{max-width:1000px;margin:0 auto;padding:0 48px 100px;position:relative;z-index:1}
-
-.product-card{border:1px solid var(--bdr);border-radius:var(--rxl);background:var(--bg-card);margin-bottom:24px;overflow:hidden;opacity:0;transform:translateY(24px);transition:opacity .5s ease,transform .5s ease,border-color .2s,box-shadow .2s}
-.product-card.visible{opacity:1;transform:translateY(0)}
-.teal-card:hover{border-color:rgba(16,185,129,0.3);box-shadow:0 0 48px rgba(16,185,129,0.06)}
-.blue-card:hover{border-color:rgba(59,130,246,0.35);box-shadow:0 0 48px rgba(59,130,246,0.08)}
-.amber-card:hover{border-color:rgba(245,158,11,0.3);box-shadow:0 0 48px rgba(245,158,11,0.06)}
-
-.card-header{display:flex;align-items:center;justify-content:space-between;padding:24px 32px 0;flex-wrap:wrap;gap:16px}
-.card-num{font-family:var(--mono);font-size:11px;color:var(--txt3);font-weight:500;letter-spacing:.08em}
-.card-tag{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
-.ct-teal{background:rgba(16,185,129,0.12);color:#6ee7b7;border:1px solid rgba(16,185,129,0.2)}
-.ct-blue{background:rgba(59,130,246,0.12);color:#93c5fd;border:1px solid rgba(59,130,246,0.2)}
-.ct-amber{background:rgba(245,158,11,0.12);color:#fcd34d;border:1px solid rgba(245,158,11,0.2)}
-
-.card-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.card-left{padding:28px 32px 32px;border-right:1px solid var(--bdr)}
-.card-right{padding:28px 32px 32px}
-.card-title{font-size:26px;font-weight:600;color:var(--txt);margin-bottom:14px;letter-spacing:-.01em;line-height:1.2}
-.card-desc{font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:22px}
-.analogy-pill{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--rmd);background:rgba(255,255,255,0.03);border:1px solid var(--bdr);margin-bottom:22px}
-.a-icon{font-size:20px;flex-shrink:0;margin-top:1px}
-.a-text{font-size:12px;color:var(--txt2);line-height:1.6}
-.a-text strong{color:var(--txt);font-weight:500}
-.meta-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
-.meta-cell{padding:10px 12px;border-radius:var(--rsm);background:rgba(255,255,255,0.03);border:1px solid var(--bdr)}
-.mc-key{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--txt3);margin-bottom:4px}
-.mc-val{font-size:12px;color:var(--txt2);line-height:1.4}
-.tag-row{display:flex;flex-wrap:wrap;gap:6px}
-.tag{font-size:11px;padding:4px 11px;border-radius:20px;font-weight:500}
-.tag-pos-teal{background:rgba(16,185,129,0.1);color:#6ee7b7}
-.tag-pos-blue{background:rgba(59,130,246,0.1);color:#93c5fd}
-.tag-pos-amber{background:rgba(245,158,11,0.1);color:#fcd34d}
-.tag-neg{background:rgba(255,255,255,0.04);color:var(--txt3);border:1px solid var(--bdr)}
-
-.sec-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);margin-bottom:14px}
-
-.flow-nodes{display:flex;align-items:center;gap:0;margin-bottom:22px;overflow-x:auto;padding-bottom:4px}
-.fn{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0;min-width:70px}
-.fn-box{padding:7px 10px;border-radius:var(--rsm);font-size:11px;font-weight:500;text-align:center;white-space:nowrap;border:1px solid}
-.fn-user{background:rgba(255,255,255,0.04);border-color:var(--bdr2);color:var(--txt2)}
-.fn-teal{background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.25);color:#6ee7b7}
-.fn-blue{background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.25);color:#93c5fd}
-.fn-amber{background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.25);color:#fcd34d}
-.fn-bank{background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.25);color:#c4b5fd}
-.fn-sub{font-size:10px;color:var(--txt3);text-align:center;max-width:70px;line-height:1.3}
-.fn-arrow{color:var(--txt3);font-size:14px;padding:0 3px;margin-bottom:18px;flex-shrink:0}
-
-.own-bar{display:flex;height:20px;border-radius:5px;overflow:hidden;border:1px solid var(--bdr);margin-bottom:8px}
-.ob-seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;overflow:hidden;white-space:nowrap}
-.obs-lt{background:rgba(16,185,129,0.08);color:#6ee7b7}
-.obs-st{background:rgba(16,185,129,0.22);color:#34d399}
-.obs-lb{background:rgba(59,130,246,0.08);color:#93c5fd}
-.obs-sb{background:rgba(59,130,246,0.22);color:#60a5fa}
-.obs-la{background:rgba(245,158,11,0.08);color:#fcd34d}
-.obs-sa{background:rgba(245,158,11,0.22);color:#fbbf24}
-.own-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px}
-.ol-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--txt3)}
-.ol-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
-
-.steps{display:flex;flex-direction:column}
-.step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--bdr)}
-.step:last-child{border-bottom:none}
-.step-n{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0;font-family:var(--mono);margin-top:1px}
-.sn-t{background:rgba(16,185,129,0.15);color:#6ee7b7}
-.sn-b{background:rgba(59,130,246,0.15);color:#93c5fd}
-.sn-a{background:rgba(245,158,11,0.15);color:#fcd34d}
-.step-info strong{display:block;font-size:12px;font-weight:500;color:var(--txt);margin-bottom:2px}
-.step-info p{font-size:11px;color:var(--txt2);line-height:1.55}
-code{font-family:var(--mono);font-size:10.5px;background:rgba(59,130,246,0.1);color:#93c5fd;padding:1px 5px;border-radius:4px;border:1px solid rgba(59,130,246,0.15)}
-
-.compare-section{max-width:1000px;margin:0 auto;padding:0 48px 100px;position:relative;z-index:1}
-.section-heading{text-align:center;margin-bottom:40px}
-.section-eyebrow{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-b);margin-bottom:14px}
-.section-heading h2{font-size:32px;font-weight:600;color:var(--txt);letter-spacing:-.01em;margin-bottom:10px}
-.section-heading p{font-size:14px;color:var(--txt2)}
-.compare-wrap{border:1px solid var(--bdr);border-radius:var(--rxl);overflow:hidden}
-.compare-table{width:100%;border-collapse:collapse;font-size:13px}
-.compare-table thead tr{border-bottom:1px solid var(--bdr2);background:var(--bg-3)}
-.compare-table th{padding:16px 20px;text-align:left;font-weight:600;font-size:13px}
-.compare-table th:first-child{color:var(--txt3);font-size:11px;text-transform:uppercase;letter-spacing:.07em;font-weight:500}
-.th-teal{color:#6ee7b7}
-.th-blue{color:#93c5fd}
-.th-amber{color:#fcd34d}
-.compare-table tbody tr{border-bottom:1px solid var(--bdr);transition:background .15s}
-.compare-table tbody tr:last-child{border-bottom:none}
-.compare-table tbody tr:hover{background:rgba(255,255,255,0.02)}
-.compare-table td{padding:13px 20px;color:var(--txt2);vertical-align:top;line-height:1.5}
-.compare-table td:first-child{color:var(--txt3);font-size:12px;font-weight:500}
-.chk{color:#10b981;font-weight:600}
-.crs{color:var(--txt3)}
-
-footer{border-top:1px solid var(--bdr);padding:36px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1000px;margin:0 auto;position:relative;z-index:1;flex-wrap:wrap;gap:16px}
-.footer-left{display:flex;align-items:center;gap:12px}
-.footer-left p{font-size:13px;color:var(--txt3)}
-.footer-links{display:flex;gap:20px}
-.footer-links a{font-size:13px;color:var(--txt3);text-decoration:none;transition:color .15s}
-.footer-links a:hover{color:var(--txt)}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── TABLET ── */
-@media(max-width:900px){
-  .nav-badge{display:none}
-  .hero{padding:80px 32px 60px}
-  .spectrum{padding:0 32px;margin-bottom:48px}
-  .products,.compare-section{padding-left:32px;padding-right:32px}
-  .stats-strip{gap:40px;padding:24px 32px}
-  footer{padding:28px 32px}
+/* grid overlay */
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image: linear-gradient(var(--b0) 1px, transparent 1px), linear-gradient(90deg, var(--b0) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
-/* ── MOBILE ── */
-@media(max-width:680px){
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  height: 64px; padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(5,9,15,0.80); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--b1);
+}
+.n-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--t1); font-weight: 600; font-size: 15px; }
+.n-mark { width: 30px; height: 30px; border-radius: 7px; background: var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.n-mark svg { width: 16px; height: 16px; }
+.n-links { display: flex; gap: 4px; }
+.n-link { padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; color: var(--t2); text-decoration: none; transition: color .15s, background .15s; white-space: nowrap; }
+.n-link:hover { color: var(--t1); background: var(--b0); }
+.n-link.on { color: var(--blue-xl); }
+.n-cta { padding: 8px 20px; border-radius: 8px; background: var(--blue); color: #fff; font-size: 13px; font-weight: 500; font-family: var(--f); border: none; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background .15s; }
+.n-cta:hover { background: #1d4ed8; }
+.n-ham { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.n-ham span { display: block; width: 22px; height: 2px; background: var(--t2); border-radius: 2px; transition: all .2s; }
+.mob-menu { display: none; }
 
-  /* NAV */
-  nav{padding:0 16px;height:54px}
-  .nav-center{display:none}
-  .nav-badge{display:none}
-  .btn-nav{padding:7px 14px;font-size:12px}
-  .btn-nav svg{display:none}
+/* ── HERO ── */
+.hero {
+  position: relative; z-index: 1;
+  padding: 120px 40px 100px;
+  text-align: center;
+  max-width: 900px; margin: 0 auto;
+}
+.hero-glow {
+  position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 500px; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 40%, rgba(37,99,235,0.18) 0%, transparent 65%);
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 14px; border-radius: 20px; margin-bottom: 32px;
+  border: 1px solid rgba(59,130,246,0.3); background: rgba(37,99,235,0.08);
+  font-size: 12px; font-weight: 500; color: var(--blue-xl);
+  animation: up .6s ease both;
+}
+.pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--blue-l); animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
 
-  /* HERO */
-  .hero{padding:56px 16px 48px}
-  .hero-glow{width:300px;height:200px}
-  .hero h1{font-size:clamp(28px,8vw,40px);letter-spacing:-.015em}
-  .hero p{font-size:15px}
-  .hero-actions{flex-direction:column;align-items:center;gap:10px}
-  .btn-primary,.btn-ghost{width:100%;max-width:280px;justify-content:center}
+h1.hero-h {
+  font-size: clamp(38px, 6vw, 72px);
+  font-weight: 600; line-height: 1.08; letter-spacing: -.025em;
+  margin-bottom: 24px;
+  animation: up .6s .06s ease both;
+}
+.grad { background: linear-gradient(120deg, #60a5fa 10%, #a78bfa 55%, #34d399 90%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 17px; color: var(--t2); line-height: 1.75; max-width: 520px; margin: 0 auto 44px; animation: up .6s .12s ease both; font-weight: 300; }
+.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; animation: up .6s .18s ease both; }
+.btn-p { padding: 13px 28px; border-radius: 9px; background: var(--blue); color: #fff; font-size: 14px; font-weight: 500; font-family: var(--f); border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background .15s, transform .1s; }
+.btn-p:hover { background: #1d4ed8; transform: translateY(-1px); }
+.btn-o { padding: 13px 28px; border-radius: 9px; background: transparent; color: var(--t1); font-size: 14px; font-weight: 500; font-family: var(--f); border: 1px solid var(--b2); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background .15s, transform .1s; }
+.btn-o:hover { background: var(--b0); transform: translateY(-1px); }
 
-  /* SPECTRUM */
-  .spectrum{padding:0 16px;margin-bottom:40px}
-  .spec-track{flex-direction:column;height:auto;border-radius:var(--rmd)}
-  .spec-seg{padding:14px 16px;justify-content:flex-start;border-right:none !important;border-bottom:1px solid var(--bdr)}
-  .spec-seg:last-child{border-bottom:none}
-  .spec-ends{font-size:10px}
+/* ── PRODUCT PILLS NAV ── */
+.prod-nav {
+  position: relative; z-index: 1;
+  display: flex; justify-content: center; gap: 8px;
+  padding: 0 40px 80px; flex-wrap: wrap;
+}
+.prod-pill {
+  display: flex; align-items: center; gap: 9px;
+  padding: 10px 20px; border-radius: 10px;
+  border: 1px solid var(--b1); background: var(--bg-card);
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  text-decoration: none; cursor: pointer;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.prod-pill:hover { border-color: var(--b2); color: var(--t1); background: rgba(255,255,255,0.04); }
+.pp-dot { width: 7px; height: 7px; border-radius: 50%; }
+.pp-g { background: var(--green); }
+.pp-b { background: var(--blue-l); }
+.pp-a { background: var(--amber); }
 
-  /* STATS */
-  .stats-strip{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0}
-  .stat-item{padding:20px 16px;border-right:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
-  .stat-item:nth-child(2){border-right:none}
-  .stat-item:nth-child(3){border-bottom:none}
-  .stat-item:nth-child(4){border-right:none;border-bottom:none}
-  .stat-num{font-size:22px}
+/* ── DIVIDER ── */
+.divider { border: none; border-top: 1px solid var(--b1); max-width: 1100px; margin: 0 auto; }
 
-  /* PRODUCTS */
-  .products{padding:0 16px 64px}
-  .product-card{border-radius:var(--rlg);margin-bottom:16px}
-  .card-header{padding:18px 18px 0;gap:10px}
-  .card-num{font-size:10px}
-  .card-body{grid-template-columns:1fr}
-  .card-left{padding:18px 18px 20px;border-right:none;border-bottom:1px solid var(--bdr)}
-  .card-right{padding:18px 18px 20px}
-  .card-title{font-size:22px}
-  .card-desc{font-size:13px}
-  .analogy-pill{padding:12px 14px}
-  .a-icon{font-size:18px}
-  .meta-row{grid-template-columns:1fr 1fr;gap:6px}
-  .meta-cell{padding:9px 10px}
+/* ── PRODUCT SECTIONS ── */
+.prod-section {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto;
+  padding: 96px 40px;
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.prod-section.vis { opacity: 1; transform: none; }
 
-  /* FLOW NODES — horizontal scroll on mobile */
-  .flow-nodes{
-    display:flex;flex-wrap:nowrap;
-    overflow-x:auto;overflow-y:visible;
-    -webkit-overflow-scrolling:touch;
-    scroll-snap-type:x mandatory;
-    gap:0;padding-bottom:8px;
-    margin-left:-18px;margin-right:-18px;
-    padding-left:18px;padding-right:18px;
-  }
-  .flow-nodes::-webkit-scrollbar{height:3px}
-  .flow-nodes::-webkit-scrollbar-track{background:transparent}
-  .flow-nodes::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:2px}
-  .fn{scroll-snap-align:start;min-width:76px}
-  .fn-box{font-size:10px;padding:6px 8px}
-  .fn-sub{font-size:9px;max-width:76px}
-  .fn-arrow{font-size:12px;padding:0 2px}
+/* header row */
+.ps-head {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: start; margin-bottom: 72px;
+}
+.ps-left {}
+.ps-num { font-family: var(--m); font-size: 11px; color: var(--t3); letter-spacing: .1em; margin-bottom: 20px; }
+.ps-tag {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.ps-tag-g { background: rgba(16,185,129,0.1); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.2); }
+.ps-tag-b { background: rgba(59,130,246,0.1); color: #93c5fd; border: 1px solid rgba(59,130,246,0.2); }
+.ps-tag-a { background: rgba(245,158,11,0.1); color: #fcd34d; border: 1px solid rgba(245,158,11,0.2); }
+h2.ps-title { font-size: clamp(32px,4vw,48px); font-weight: 600; letter-spacing: -.02em; line-height: 1.1; margin-bottom: 20px; }
+.ps-desc { font-size: 15px; color: var(--t2); line-height: 1.8; font-weight: 300; }
 
-  /* OWN BAR */
-  .own-bar{height:24px}
-  .ob-seg{font-size:9px}
-  .own-legend{gap:10px}
-  .ol-item{font-size:10px}
+/* right: stats/meta */
+.ps-right { padding-top: 8px; }
+.ps-analogy {
+  padding: 20px 22px; border-radius: 12px;
+  background: var(--bg-card); border: 1px solid var(--b1);
+  margin-bottom: 24px;
+}
+.ps-analogy-label { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--t3); margin-bottom: 10px; }
+.ps-analogy p { font-size: 14px; color: var(--t2); line-height: 1.7; }
+.ps-analogy p strong { color: var(--t1); font-weight: 500; }
+.ps-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pm { padding: 16px 18px; border-radius: 10px; background: var(--bg-card); border: 1px solid var(--b1); }
+.pm-k { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--t3); margin-bottom: 6px; }
+.pm-v { font-size: 13px; color: var(--t2); line-height: 1.5; }
 
-  /* STEPS */
-  .step{padding:9px 0;gap:10px}
-  .step-n{width:18px;height:18px;font-size:9px}
-  .step-info strong{font-size:12px}
-  .step-info p{font-size:11px}
+/* pills row */
+.ps-pills { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 20px; }
+.ps-pill { font-size: 12px; padding: 5px 12px; border-radius: 20px; font-weight: 500; }
+.pill-g { background: rgba(16,185,129,0.08); color: #6ee7b7; }
+.pill-b { background: rgba(59,130,246,0.08); color: #93c5fd; }
+.pill-a { background: rgba(245,158,11,0.08); color: #fcd34d; }
+.pill-n { background: var(--b0); color: var(--t3); border: 1px solid var(--b1); }
 
-  /* COMPARE */
-  .compare-section{padding:0 16px 64px}
-  .section-heading h2{font-size:24px}
-  .compare-wrap{border-radius:var(--rlg);overflow-x:auto}
-  .compare-table{min-width:560px;font-size:12px}
-  .compare-table th{padding:12px 14px;font-size:12px}
-  .compare-table th:first-child{font-size:10px}
-  .compare-table td{padding:11px 14px;font-size:11px}
+/* ── FLOW + STEPS ── */
+.ps-body { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
 
-  /* FOOTER */
-  footer{padding:24px 16px;flex-direction:column;align-items:flex-start;gap:16px}
-  .footer-links{flex-wrap:wrap;gap:14px}
+/* flow */
+.flow-block {}
+.block-label { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--t3); margin-bottom: 24px; }
+.flow-list { display: flex; flex-direction: column; gap: 0; }
+.flow-row {
+  display: flex; gap: 16px; align-items: flex-start;
+  position: relative; padding-bottom: 24px;
+}
+.flow-row:last-child { padding-bottom: 0; }
+.flow-row:not(:last-child)::before {
+  content: ''; position: absolute; left: 15px; top: 32px;
+  width: 1px; bottom: 0; background: var(--b1);
+}
+.flow-icon {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; position: relative; z-index: 1;
+  font-size: 11px; font-weight: 600; font-family: var(--m);
+}
+.fi-g { background: rgba(16,185,129,0.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.2); }
+.fi-b { background: rgba(59,130,246,0.12); color: #93c5fd; border: 1px solid rgba(59,130,246,0.2); }
+.fi-a { background: rgba(245,158,11,0.12); color: #fcd34d; border: 1px solid rgba(245,158,11,0.2); }
+.fi-n { background: var(--b0); color: var(--t3); border: 1px solid var(--b1); }
+.flow-text { padding-top: 4px; }
+.flow-text strong { display: block; font-size: 14px; font-weight: 500; color: var(--t1); margin-bottom: 4px; }
+.flow-text span { font-size: 13px; color: var(--t2); line-height: 1.6; }
+
+/* steps */
+.steps-block {}
+.step-row { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--b1); align-items: flex-start; }
+.step-row:first-child { padding-top: 0; }
+.step-row:last-child { border-bottom: none; padding-bottom: 0; }
+.step-n {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 600; font-family: var(--m); margin-top: 1px;
+}
+.sn-g { background: rgba(16,185,129,0.12); color: #6ee7b7; }
+.sn-b { background: rgba(59,130,246,0.12); color: #93c5fd; }
+.sn-a { background: rgba(245,158,11,0.12); color: #fcd34d; }
+.step-body strong { display: block; font-size: 14px; font-weight: 500; color: var(--t1); margin-bottom: 4px; }
+.step-body p { font-size: 13px; color: var(--t2); line-height: 1.65; }
+code { font-family: var(--m); font-size: 11.5px; background: rgba(59,130,246,0.1); color: var(--blue-xl); padding: 1px 6px; border-radius: 4px; border: 1px solid rgba(59,130,246,0.18); }
+
+/* ── COMPARE ── */
+.compare { position: relative; z-index: 1; padding: 96px 40px 120px; }
+.compare-inner { max-width: 1100px; margin: 0 auto; }
+.compare-head { text-align: center; margin-bottom: 56px; }
+.compare-head .ey { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--blue-xl); margin-bottom: 14px; }
+.compare-head h2 { font-size: clamp(28px,4vw,40px); font-weight: 600; letter-spacing: -.015em; margin-bottom: 12px; }
+.compare-head p { font-size: 15px; color: var(--t2); font-weight: 300; }
+
+.tbl-wrap { border: 1px solid var(--b1); border-radius: 16px; overflow: hidden; }
+.tbl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; min-width: 640px; }
+thead tr { background: var(--bg-s); border-bottom: 1px solid var(--b2); }
+thead th { padding: 18px 24px; text-align: left; font-size: 13px; font-weight: 600; }
+thead th:first-child { color: var(--t3); font-size: 11px; text-transform: uppercase; letter-spacing: .07em; font-weight: 500; }
+.tc-g { color: #6ee7b7; }
+.tc-b { color: #93c5fd; }
+.tc-a { color: #fcd34d; }
+tbody tr { border-bottom: 1px solid var(--b1); transition: background .12s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: rgba(255,255,255,.02); }
+tbody td { padding: 16px 24px; font-size: 13px; color: var(--t2); vertical-align: top; line-height: 1.6; }
+tbody td:first-child { color: var(--t3); font-size: 12px; font-weight: 500; white-space: nowrap; }
+.ck { color: var(--green); font-weight: 600; }
+.cx { color: var(--t4); }
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--b1);
+  padding: 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1100px; margin: 0 auto;
+  flex-wrap: wrap; gap: 20px;
+}
+.f-left { display: flex; align-items: center; gap: 12px; }
+.f-left p { font-size: 13px; color: var(--t3); }
+.f-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.f-links a { font-size: 13px; color: var(--t3); text-decoration: none; transition: color .15s; }
+.f-links a:hover { color: var(--t1); }
+
+/* ── ANIMATIONS ── */
+@keyframes up { from { opacity:0; transform: translateY(22px); } to { opacity:1; transform: none; } }
+
+/* ── MOBILE NAV MENU ── */
+.mob-open .mob-menu {
+  display: flex; flex-direction: column;
+  position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
+  background: rgba(5,9,15,0.98); backdrop-filter: blur(20px);
+  z-index: 150; padding: 32px 24px; gap: 4px;
+  border-top: 1px solid var(--b1);
+  overflow-y: auto;
+}
+.mob-menu a { padding: 14px 0; font-size: 16px; font-weight: 500; color: var(--t2); text-decoration: none; border-bottom: 1px solid var(--b1); display: block; }
+.mob-menu a:last-child { border-bottom: none; }
+.mob-menu .mob-cta { margin-top: 24px; text-align: center; padding: 14px; border-radius: 9px; background: var(--blue); color: #fff; font-size: 15px; font-weight: 500; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .n-links { display: none; }
+  .n-cta { display: none; }
+  .n-ham { display: flex; }
+  .hero { padding: 80px 24px 72px; }
+  .hero-glow { width: 400px; height: 300px; }
+  .prod-nav { padding: 0 24px 64px; }
+  .prod-section { padding: 72px 24px; }
+  .ps-head { grid-template-columns: 1fr; gap: 40px; margin-bottom: 56px; }
+  .ps-body { grid-template-columns: 1fr; gap: 40px; }
+  .compare { padding: 72px 24px 96px; }
+  footer { padding: 32px 24px; }
 }
 
-/* ── VERY SMALL ── */
-@media(max-width:380px){
-  .hero h1{font-size:26px}
-  .meta-row{grid-template-columns:1fr}
-  .stats-strip{grid-template-columns:1fr}
-  .stat-item{border-right:none !important}
-  .stat-item:last-child{border-bottom:none !important}
+@media (max-width: 600px) {
+  nav { padding: 0 16px; height: 56px; }
+  .mob-open .mob-menu { top: 56px; }
+  .hero { padding: 64px 16px 56px; }
+  .hero-sub { font-size: 15px; }
+  .hero-btns { flex-direction: column; align-items: center; }
+  .btn-p, .btn-o { width: 100%; max-width: 300px; justify-content: center; }
+  .prod-nav { padding: 0 16px 56px; }
+  .prod-pill { font-size: 12px; padding: 9px 16px; }
+  .prod-section { padding: 64px 16px; }
+  h2.ps-title { font-size: 28px; }
+  .ps-meta { grid-template-columns: 1fr; }
+  .compare { padding: 64px 16px 80px; }
+  .compare-head h2 { font-size: 26px; }
+  thead th, tbody td { padding: 14px 16px; }
+  footer { padding: 28px 16px; flex-direction: column; align-items: flex-start; }
+  .f-links { gap: 16px; }
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="#" class="nav-logo">
-    <div class="logo-mark">
-      <svg viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="6" height="6" rx="1.5" fill="white"/><rect x="10" y="2" width="6" height="6" rx="1.5" fill="white" opacity=".7"/><rect x="2" y="10" width="6" height="6" rx="1.5" fill="white" opacity=".7"/><rect x="10" y="10" width="6" height="6" rx="1.5" fill="white" opacity=".35"/></svg>
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="n-logo">
+    <div class="n-mark">
+      <svg viewBox="0 0 16 16" fill="none">
+        <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.5" fill="white"/>
+        <rect x="9" y="1.5" width="5.5" height="5.5" rx="1.5" fill="white" opacity=".65"/>
+        <rect x="1.5" y="9" width="5.5" height="5.5" rx="1.5" fill="white" opacity=".65"/>
+        <rect x="9" y="9" width="5.5" height="5.5" rx="1.5" fill="white" opacity=".3"/>
+      </svg>
     </div>
     Juspay
   </a>
-  <div class="nav-center">
-    <a href="#hc" class="nav-link active">HyperCheckout</a>
-    <a href="#sdk" class="nav-link">Express SDK</a>
-    <a href="#api" class="nav-link">Express API</a>
-    <a href="#compare" class="nav-link">Compare</a>
+  <div class="n-links">
+    <a href="#hc" class="n-link on">HyperCheckout</a>
+    <a href="#sdk" class="n-link">Express SDK</a>
+    <a href="#api" class="n-link">Express API</a>
+    <a href="#compare" class="n-link">Compare</a>
   </div>
-  <div class="nav-right">
-    <span class="nav-badge">Checkout Suite</span>
-    <a href="#compare" class="btn-nav">View Docs <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <a href="#compare" class="n-cta">View Docs</a>
+  <div class="n-ham" id="ham" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
   </div>
 </nav>
+<div class="mob-menu">
+  <a href="#hc" onclick="closeMenu()">HyperCheckout</a>
+  <a href="#sdk" onclick="closeMenu()">Express Checkout SDK</a>
+  <a href="#api" onclick="closeMenu()">Express Checkout API</a>
+  <a href="#compare" onclick="closeMenu()">Compare all three</a>
+  <a href="#compare" class="mob-cta" onclick="closeMenu()">View Docs</a>
+</div>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-glow"></div>
-  <div class="hero-badge"><span class="hero-badge-dot"></span>India's Payment Infrastructure</div>
-  <h1>Three ways to <span class="grad">accept payments</span><br>from your customers</h1>
-  <p>One platform. Three integration styles. Choose based on how much control you need and how fast you want to ship.</p>
-  <div class="hero-actions">
-    <a href="#hc" class="btn-primary">Explore products <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2.5 6.5h8M7 3l3.5 3.5L7 10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    <a href="#compare" class="btn-ghost">Compare all three</a>
+  <div class="eyebrow"><span class="pulse"></span>Juspay · Checkout Suite</div>
+  <h1 class="hero-h">Three ways to<br><span class="grad">accept payments</span></h1>
+  <p class="hero-sub">One platform. Three integration styles. Pick the one that matches your team's capacity and how much control you need.</p>
+  <div class="hero-btns">
+    <a href="#hc" class="btn-p">Explore products <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a href="#compare" class="btn-o">Compare all three</a>
   </div>
 </section>
 
-<div class="spectrum">
-  <div class="spec-label">Integration complexity — pick your position</div>
-  <div class="spec-track">
-    <a href="#hc" class="spec-seg ss-teal"><span class="spec-dot sd-teal"></span>HyperCheckout</a>
-    <a href="#sdk" class="spec-seg ss-blue"><span class="spec-dot sd-blue"></span>Express Checkout SDK</a>
-    <a href="#api" class="spec-seg ss-amber"><span class="spec-dot sd-amber"></span>Express Checkout API</a>
-  </div>
-  <div class="spec-ends"><span>← Fastest to ship · Least UI work</span><span>Maximum control · Most engineering effort →</span></div>
+<!-- PRODUCT QUICK NAV -->
+<div class="prod-nav">
+  <a href="#hc" class="prod-pill"><span class="pp-dot pp-g"></span>HyperCheckout</a>
+  <a href="#sdk" class="prod-pill"><span class="pp-dot pp-b"></span>Express Checkout SDK</a>
+  <a href="#api" class="prod-pill"><span class="pp-dot pp-a"></span>Express Checkout API</a>
 </div>
 
-<div class="stats-strip">
-  <div class="stat-item"><div class="stat-num">50<span>M+</span></div><div class="stat-label">Transactions per day</div></div>
-  <div class="stat-item"><div class="stat-num">99.<span>99%</span></div><div class="stat-label">Platform uptime</div></div>
-  <div class="stat-item"><div class="stat-num"><span>~</span>10k</div><div class="stat-label">Merchants integrated</div></div>
-  <div class="stat-item"><div class="stat-num">300<span>+</span></div><div class="stat-label">Bank & PSP connections</div></div>
-</div>
+<hr class="divider">
 
-<div class="products">
-
-  <!-- 01 HyperCheckout -->
-  <div id="hc" class="product-card teal-card">
-    <div class="card-header">
-      <span class="card-num">PRODUCT / 01</span>
-      <span class="card-tag ct-teal"><svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" fill="#10b981"/></svg>No-code · Hosted page</span>
-    </div>
-    <div class="card-body">
-      <div class="card-left">
-        <h2 class="card-title">HyperCheckout</h2>
-        <p class="card-desc">A fully pre-built, hosted payment page. Your backend creates a session, your app redirects the user — Juspay owns every pixel of the checkout UI and every step of the payment flow from there.</p>
-        <div class="analogy-pill"><span class="a-icon">🏪</span><p class="a-text"><strong>Think of it as:</strong> renting a fully furnished checkout counter. You escort the customer to the door. Juspay handles everything inside — payment form, OTPs, bank redirects, success screen.</p></div>
-        <div class="meta-row">
-          <div class="meta-cell"><div class="mc-key">Platforms</div><div class="mc-val">Web · Android · iOS</div></div>
-          <div class="meta-cell"><div class="mc-key">Time to launch</div><div class="mc-val">Hours to 1 day</div></div>
-          <div class="meta-cell"><div class="mc-key">UI ownership</div><div class="mc-val">Juspay hosts &amp; owns the UI</div></div>
-          <div class="meta-cell"><div class="mc-key">Best for</div><div class="mc-val">D2C brands, SMBs, fast-movers</div></div>
-        </div>
-        <div class="tag-row">
-          <span class="tag tag-pos-teal">Zero UI dev needed</span>
-          <span class="tag tag-pos-teal">Fastest to market</span>
-          <span class="tag tag-neg">Limited UI control</span>
-        </div>
+<!-- ── PRODUCT 01: HYPERCHECKOUT ── -->
+<section id="hc" class="prod-section">
+  <div class="ps-head">
+    <div class="ps-left">
+      <div class="ps-num">PRODUCT / 01</div>
+      <div class="ps-tag ps-tag-g">No-code · Hosted page</div>
+      <h2 class="ps-title">HyperCheckout</h2>
+      <p class="ps-desc">A fully pre-built, hosted payment page. Your backend creates a session, your app redirects the user — Juspay handles every pixel of the checkout UI and every step of the payment flow from there. Nothing for your team to build or maintain.</p>
+      <div class="ps-pills" style="margin-top:28px">
+        <span class="ps-pill pill-g">Zero UI development</span>
+        <span class="ps-pill pill-g">Fastest to market</span>
+        <span class="ps-pill pill-n">Limited UI control</span>
       </div>
-      <div class="card-right">
-        <div class="sec-label">Payment flow</div>
-        <div class="flow-nodes">
-          <div class="fn"><div class="fn-box fn-user">Customer</div><div class="fn-sub">clicks Pay</div></div>
-          <span class="fn-arrow">›</span>
-          <div class="fn"><div class="fn-box fn-teal">Your backend</div><div class="fn-sub">creates session</div></div>
-          <span class="fn-arrow">›</span>
-          <div class="fn"><div class="fn-box fn-teal">Juspay page</div><div class="fn-sub">hosted UI shown</div></div>
-          <span class="fn-arrow">›</span>
-          <div class="fn"><div class="fn-box fn-bank">Bank / UPI</div><div class="fn-sub">processes payment</div></div>
-          <span class="fn-arrow">›</span>
-          <div class="fn"><div class="fn-box fn-user">Your site</div><div class="fn-sub">verify &amp; fulfil</div></div>
-        </div>
-        <div class="sec-label">Ownership split</div>
-        <div class="own-bar"><div class="ob-seg obs-lt" style="width:15%">You</div><div class="ob-seg obs-st" style="width:85%">Juspay owns 85%</div></div>
-        <div class="own-legend">
-          <div class="ol-item"><div class="ol-dot" style="background:rgba(16,185,129,.35)"></div>Juspay (UI + logic + routing)</div>
-          <div class="ol-item"><div class="ol-dot" style="background:rgba(16,185,129,.1)"></div>You (session creation + verification)</div>
-        </div>
-        <div class="sec-label">Integration steps</div>
-        <div class="steps">
-          <div class="step"><div class="step-n sn-t">1</div><div class="step-info"><strong>Create a session (backend)</strong><p>Call <code>POST /session</code> with <code>order_id</code>, <code>amount</code>, <code>customer_id</code>, <code>return_url</code>. Get back a hosted payment URL.</p></div></div>
-          <div class="step"><div class="step-n sn-t">2</div><div class="step-info"><strong>Redirect the user</strong><p>Point the browser to the URL from step 1. On mobile apps, open inside an in-app WebView.</p></div></div>
-          <div class="step"><div class="step-n sn-t">3</div><div class="step-info"><strong>User pays on Juspay's page</strong><p>Nothing for your team to build. Juspay renders checkout, handles OTPs, and manages all bank redirects.</p></div></div>
-          <div class="step"><div class="step-n sn-t">4</div><div class="step-info"><strong>Verify on return</strong><p>User lands on your <code>return_url</code>. Always call <code>GET /order/{id}</code> server-side before fulfilling — never trust URL params alone.</p></div></div>
-          <div class="step"><div class="step-n sn-t">5</div><div class="step-info"><strong>Configure webhooks</strong><p>Register your endpoint in the dashboard. Juspay sends HMAC-signed <code>POST</code> events for every status change.</p></div></div>
-        </div>
+    </div>
+    <div class="ps-right">
+      <div class="ps-analogy">
+        <div class="ps-analogy-label">Analogy</div>
+        <p>Like <strong>renting a fully furnished checkout counter.</strong> You escort the customer to the door — Juspay handles everything inside. Payment form, OTPs, bank redirects, and the success screen are all theirs.</p>
+      </div>
+      <div class="ps-meta">
+        <div class="pm"><div class="pm-k">Platforms</div><div class="pm-v">Web · Android · iOS</div></div>
+        <div class="pm"><div class="pm-k">Time to launch</div><div class="pm-v">Hours to 1 day</div></div>
+        <div class="pm"><div class="pm-k">UI ownership</div><div class="pm-v">Juspay hosts & owns</div></div>
+        <div class="pm"><div class="pm-k">Best for</div><div class="pm-v">D2C brands · SMBs · Fast-movers</div></div>
       </div>
     </div>
   </div>
 
-  <!-- 02 Express Checkout SDK -->
-  <div id="sdk" class="product-card blue-card">
-    <div class="card-header">
-      <span class="card-num">PRODUCT / 02</span>
-      <span class="card-tag ct-blue"><svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" fill="#3b82f6"/></svg>SDK-based · Custom UI</span>
-    </div>
-    <div class="card-body">
-      <div class="card-left">
-        <h2 class="card-title">Express Checkout SDK</h2>
-        <p class="card-desc">You build and own the entire payment UI. Juspay's SDK lives underneath — handling payment processing, UPI deep links, 3DS flows, and smart routing invisibly behind your branded screens.</p>
-        <div class="analogy-pill"><span class="a-icon">🚗</span><p class="a-text"><strong>Think of it as:</strong> Juspay gives you the engine and gearbox. You design the entire car body around it. The engine (payment logic) is theirs — every screen the user sees is yours.</p></div>
-        <div class="meta-row">
-          <div class="meta-cell"><div class="mc-key">Platforms</div><div class="mc-val">Android · iOS · React Native · Flutter</div></div>
-          <div class="meta-cell"><div class="mc-key">Time to launch</div><div class="mc-val">Days to a few weeks</div></div>
-          <div class="meta-cell"><div class="mc-key">UI ownership</div><div class="mc-val">100% yours — every pixel</div></div>
-          <div class="meta-cell"><div class="mc-key">Best for</div><div class="mc-val">Consumer super-apps, food delivery, quick commerce</div></div>
+  <div class="ps-body">
+    <div class="flow-block">
+      <div class="block-label">How payment flows</div>
+      <div class="flow-list">
+        <div class="flow-row">
+          <div class="flow-icon fi-n">U</div>
+          <div class="flow-text"><strong>Customer clicks "Pay"</strong><span>On your website or app. No Juspay involvement yet.</span></div>
         </div>
-        <div class="tag-row">
-          <span class="tag tag-pos-blue">Full UI control</span>
-          <span class="tag tag-pos-blue">No payment logic to build</span>
-          <span class="tag tag-neg">Requires UI development</span>
-          <span class="tag tag-neg">Mobile-first only</span>
+        <div class="flow-row">
+          <div class="flow-icon fi-g">M</div>
+          <div class="flow-text"><strong>Your backend creates a session</strong><span>Server-side <code>POST /session</code> call with order details. Juspay responds with a hosted payment URL.</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-icon fi-g">J</div>
+          <div class="flow-text"><strong>User lands on Juspay's page</strong><span>Browser redirects to Juspay's hosted UI. Your code does nothing here — Juspay renders the full checkout.</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-icon fi-g">B</div>
+          <div class="flow-text"><strong>Bank processes the payment</strong><span>Juspay routes to the optimal acquirer, handles OTPs and 3DS entirely.</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-icon fi-n">M</div>
+          <div class="flow-text"><strong>User returns · You verify</strong><span>Juspay redirects user to your <code>return_url</code>. Always call <code>GET /order/{id}</code> server-side before fulfilling.</span></div>
         </div>
       </div>
-      <div class="card-right">
-        <div class="sec-label">Payment flow</div>
-        <div class="flow-nodes">
-          <div class="fn"><div class="fn-box fn-user">Customer</div><div class="fn-sub">taps Pay in your app</div></div>
-          <span class="fn-arrow">›</span>
-          <div class="fn"><div class="fn-box fn-blue">Your UI</div><div class="fn-sub">calls SDK method</div></div>
-          <span class="fn-arrow">›</span>
-          <div class="fn"><div class="fn-box fn-blue">Juspay SDK</div><div class="fn-sub">runs logic internally</div></div>
-          <span class="fn-arrow">›</span>
-          <div class="fn"><div class="fn-box fn-bank">Bank / UPI</div><div class="fn-sub">processes payment</div></div>
-          <span class="fn-arrow">›</span>
-          <div class="fn"><div class="fn-box fn-user">Your UI</div><div class="fn-sub">receives callback</div></div>
-        </div>
-        <div class="sec-label">Ownership split</div>
-        <div class="own-bar"><div class="ob-seg obs-lb" style="width:45%">You (UI)</div><div class="ob-seg obs-sb" style="width:55%">Juspay (logic)</div></div>
-        <div class="own-legend">
-          <div class="ol-item"><div class="ol-dot" style="background:rgba(59,130,246,.35)"></div>Juspay (payment processing + routing)</div>
-          <div class="ol-item"><div class="ol-dot" style="background:rgba(59,130,246,.1)"></div>You (all UI screens + UX design)</div>
-        </div>
-        <div class="sec-label">Integration steps</div>
-        <div class="steps">
-          <div class="step"><div class="step-n sn-b">1</div><div class="step-info"><strong>Add SDK to your project</strong><p>Android: <code>build.gradle</code>. iOS: CocoaPods / SPM. React Native / Flutter: install the respective plugin package.</p></div></div>
-          <div class="step"><div class="step-n sn-b">2</div><div class="step-info"><strong>Initialise SDK on app start</strong><p>Call <code>HyperServices.initiate()</code> with your merchant ID. Prefetches data to reduce checkout latency.</p></div></div>
-          <div class="step"><div class="step-n sn-b">3</div><div class="step-info"><strong>Create a session (backend)</strong><p>Server calls Juspay. Pass the <code>client_auth_token</code> from the response down to your app's SDK layer.</p></div></div>
-          <div class="step"><div class="step-n sn-b">4</div><div class="step-info"><strong>Build your payment screen</strong><p>Design and code your UI — UPI input, saved cards, wallet options. 100% your team's work. Juspay has no say here.</p></div></div>
-          <div class="step"><div class="step-n sn-b">5</div><div class="step-info"><strong>Call process() on submit</strong><p>On user confirm, call <code>HyperServices.process(payload)</code> with the chosen method and details as JSON.</p></div></div>
-          <div class="step"><div class="step-n sn-b">6</div><div class="step-info"><strong>Handle SDK event callbacks</strong><p>Listen on <code>onEvent</code> for <code>show_loader</code>, <code>hide_loader</code>, <code>payment_result</code>. Update your UI accordingly.</p></div></div>
-          <div class="step"><div class="step-n sn-b">7</div><div class="step-info"><strong>Verify on your backend</strong><p>Always confirm status server-side via <code>GET /order/{id}</code> before fulfilling. Never trust frontend callbacks alone.</p></div></div>
-        </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="block-label">Integration steps</div>
+      <div class="steps-list">
+        <div class="step-row"><div class="step-n sn-g">1</div><div class="step-body"><strong>Create a session (backend)</strong><p>Call <code>POST /session</code> with <code>order_id</code>, <code>amount</code>, <code>customer_id</code>, <code>return_url</code>. Response contains a hosted payment URL.</p></div></div>
+        <div class="step-row"><div class="step-n sn-g">2</div><div class="step-body"><strong>Redirect the user</strong><p>Point the browser to the URL from step 1. On mobile apps, open it inside an in-app WebView.</p></div></div>
+        <div class="step-row"><div class="step-n sn-g">3</div><div class="step-body"><strong>User pays on Juspay's page</strong><p>Nothing to build. Juspay handles the full checkout UI, OTPs, and all bank redirect flows.</p></div></div>
+        <div class="step-row"><div class="step-n sn-g">4</div><div class="step-body"><strong>Verify on return</strong><p>User lands on your <code>return_url</code>. Call <code>GET /order/{id}</code> server-side — never trust URL params alone.</p></div></div>
+        <div class="step-row"><div class="step-n sn-g">5</div><div class="step-body"><strong>Configure webhooks</strong><p>Register your endpoint in the dashboard. Juspay sends HMAC-signed <code>POST</code> callbacks for every payment status change.</p></div></div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- 03 Express Checkout API -->
-  <div id="api" class="product-card amber-card">
-    <div class="card-header">
-      <span class="card-num">PRODUCT / 03</span>
-      <span class="card-tag ct-amber"><svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" fill="#f59e0b"/></svg>API-first · Full ownership</span>
-    </div>
-    <div class="card-body">
-      <div class="card-left">
-        <h2 class="card-title">Express Checkout API</h2>
-        <p class="card-desc">Pure REST APIs. No SDK, no Juspay UI. You own everything — screens, payment state machine, error handling, retries, UX. Juspay is purely a backend processor you call over HTTPS.</p>
-        <div class="analogy-pill"><span class="a-icon">🏗</span><p class="a-text"><strong>Think of it as:</strong> building your own restaurant — kitchen, interior, staff, menu. Juspay is the ingredient supplier you call via API. Everything the customer sees and experiences is built entirely by you.</p></div>
-        <div class="meta-row">
-          <div class="meta-cell"><div class="mc-key">Platforms</div><div class="mc-val">Any — web, mobile, server-to-server, kiosk</div></div>
-          <div class="meta-cell"><div class="mc-key">Time to launch</div><div class="mc-val">Weeks to months</div></div>
-          <div class="meta-cell"><div class="mc-key">UI ownership</div><div class="mc-val">100% yours — Juspay is invisible</div></div>
-          <div class="meta-cell"><div class="mc-key">Best for</div><div class="mc-val">Enterprises, fintech platforms, banks</div></div>
-        </div>
-        <div class="tag-row">
-          <span class="tag tag-pos-amber">Maximum control</span>
-          <span class="tag tag-pos-amber">Platform agnostic</span>
-          <span class="tag tag-neg">High engineering effort</span>
-          <span class="tag tag-neg">Must handle all edge cases</span>
-        </div>
+<hr class="divider">
+
+<!-- ── PRODUCT 02: EXPRESS CHECKOUT SDK ── -->
+<section id="sdk" class="prod-section">
+  <div class="ps-head">
+    <div class="ps-left">
+      <div class="ps-num">PRODUCT / 02</div>
+      <div class="ps-tag ps-tag-b">SDK-based · Custom UI</div>
+      <h2 class="ps-title">Express Checkout SDK</h2>
+      <p class="ps-desc">You build and own the entire payment UI. Juspay's SDK runs underneath — handling payment processing, UPI deep links, 3DS flows, and smart routing invisibly. Your design, your UX, Juspay's engine.</p>
+      <div class="ps-pills" style="margin-top:28px">
+        <span class="ps-pill pill-b">Full UI control</span>
+        <span class="ps-pill pill-b">No payment logic to build</span>
+        <span class="ps-pill pill-n">Requires UI development</span>
+        <span class="ps-pill pill-n">Mobile-first only</span>
       </div>
-      <div class="card-right">
-        <div class="sec-label">Payment flow</div>
-        <div class="flow-nodes">
-          <div class="fn"><div class="fn-box fn-user">Customer</div><div class="fn-sub">fills your form</div></div>
-          <span class="fn-arrow">›</span>
-          <div class="fn"><div class="fn-box fn-amber">Your backend</div><div class="fn-sub">calls POST /txns</div></div>
-          <span class="fn-arrow">›</span>
-          <div class="fn"><div class="fn-box fn-amber">Juspay API</div><div class="fn-sub">routes to acquirer</div></div>
-          <span class="fn-arrow">›</span>
-          <div class="fn"><div class="fn-box fn-bank">Bank / UPI</div><div class="fn-sub">3DS if needed</div></div>
-          <span class="fn-arrow">›</span>
-          <div class="fn"><div class="fn-box fn-user">Your backend</div><div class="fn-sub">webhook received</div></div>
-        </div>
-        <div class="sec-label">Ownership split</div>
-        <div class="own-bar"><div class="ob-seg obs-la" style="width:75%">You own 75% of the stack</div><div class="ob-seg obs-sa" style="width:25%">Juspay</div></div>
-        <div class="own-legend">
-          <div class="ol-item"><div class="ol-dot" style="background:rgba(245,158,11,.35)"></div>Juspay (routing + bank connections only)</div>
-          <div class="ol-item"><div class="ol-dot" style="background:rgba(245,158,11,.1)"></div>You (UI + logic + state + error handling)</div>
-        </div>
-        <div class="sec-label">Integration steps</div>
-        <div class="steps">
-          <div class="step"><div class="step-n sn-a">1</div><div class="step-info"><strong>Set up authentication</strong><p>Get <code>merchant_id</code> + <code>api_key</code> from dashboard. All calls use HTTP Basic Auth.</p></div></div>
-          <div class="step"><div class="step-n sn-a">2</div><div class="step-info"><strong>Create an order</strong><p>Call <code>POST /orders</code> to register the order. Ties all payment attempts to a single trackable object.</p></div></div>
-          <div class="step"><div class="step-n sn-a">3</div><div class="step-info"><strong>Initiate a transaction</strong><p>Call <code>POST /txns</code>. Payload varies: cards need number + CVV (or token), UPI collect needs a VPA, netbanking needs a bank code.</p></div></div>
-          <div class="step"><div class="step-n sn-a">4</div><div class="step-info"><strong>Handle 3DS / bank redirects</strong><p>If response contains <code>authentication.url</code>, redirect your user there. Juspay receives the bank response and posts a webhook.</p></div></div>
-          <div class="step"><div class="step-n sn-a">5</div><div class="step-info"><strong>Configure webhook endpoint</strong><p>Register your URL in the dashboard. Verify the HMAC signature on every incoming event before updating order state.</p></div></div>
-          <div class="step"><div class="step-n sn-a">6</div><div class="step-info"><strong>Confirm status, fulfil order</strong><p>Call <code>GET /orders/{id}</code> server-side. This is the source of truth — webhooks can arrive out of order or be delayed.</p></div></div>
-          <div class="step"><div class="step-n sn-a">7</div><div class="step-info"><strong>Implement refunds</strong><p>Call <code>POST /orders/{id}/refunds</code>. Partial refunds are supported — pass any amount ≤ original charge.</p></div></div>
-        </div>
+    </div>
+    <div class="ps-right">
+      <div class="ps-analogy">
+        <div class="ps-analogy-label">Analogy</div>
+        <p>Like getting <strong>the engine and gearbox from Juspay</strong> and building the car body yourself. The powertrain (payment logic) is theirs — the design, feel, and UX is entirely yours.</p>
+      </div>
+      <div class="ps-meta">
+        <div class="pm"><div class="pm-k">Platforms</div><div class="pm-v">Android · iOS · RN · Flutter</div></div>
+        <div class="pm"><div class="pm-k">Time to launch</div><div class="pm-v">Days to a few weeks</div></div>
+        <div class="pm"><div class="pm-k">UI ownership</div><div class="pm-v">100% yours · Every pixel</div></div>
+        <div class="pm"><div class="pm-k">Best for</div><div class="pm-v">Consumer apps · Food delivery · Quick commerce</div></div>
       </div>
     </div>
   </div>
 
-</div>
+  <div class="ps-body">
+    <div class="flow-block">
+      <div class="block-label">How payment flows</div>
+      <div class="flow-list">
+        <div class="flow-row">
+          <div class="flow-icon fi-n">U</div>
+          <div class="flow-text"><strong>Customer taps "Pay" in your app</strong><span>On your custom-built screen. Your design, your components.</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-icon fi-b">M</div>
+          <div class="flow-text"><strong>Your UI calls an SDK method</strong><span>You call <code>HyperServices.process(payload)</code> with the selected payment method details.</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-icon fi-b">J</div>
+          <div class="flow-text"><strong>SDK handles all payment logic</strong><span>Juspay's SDK communicates internally — UPI intent, collect flows, 3DS, bank OTPs — all invisible to your team.</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-icon fi-b">B</div>
+          <div class="flow-text"><strong>Bank processes the payment</strong><span>SDK manages the deep link or redirect. User sees the bank's native OTP screen if required.</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-icon fi-n">M</div>
+          <div class="flow-text"><strong>SDK fires callback to your UI</strong><span>Your <code>onEvent</code> listener receives a <code>payment_result</code>. Your screen shows success or failure.</span></div>
+        </div>
+      </div>
+    </div>
 
-<!-- COMPARE -->
-<div id="compare" class="compare-section">
-  <div class="section-heading">
-    <div class="section-eyebrow">Side-by-side</div>
-    <h2>Compare all three products</h2>
-    <p>The single most useful reference for picking the right integration path</p>
-  </div>
-  <div class="compare-wrap">
-    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-    <table class="compare-table">
-      <thead>
-        <tr>
-          <th>Dimension</th>
-          <th class="th-teal">HyperCheckout</th>
-          <th class="th-blue">Express Checkout SDK</th>
-          <th class="th-amber">Express Checkout API</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Merchant builds UI?</td><td><span class="crs">✕</span> Juspay hosts it</td><td><span class="chk">✓</span> 100% custom screens</td><td><span class="chk">✓</span> Every pixel</td></tr>
-        <tr><td>Merchant handles payment logic?</td><td><span class="crs">✕</span> Never</td><td><span class="crs">✕</span> SDK does it</td><td><span class="chk">✓</span> Fully</td></tr>
-        <tr><td>Platform support</td><td>Web, Android, iOS (WebView)</td><td>Android, iOS, React Native, Flutter</td><td>Any platform — web, mobile, kiosk, server</td></tr>
-        <tr><td>Time to first payment</td><td>Hours to 1 day</td><td>Days to a few weeks</td><td>Weeks to months</td></tr>
-        <tr><td>Typical merchant</td><td>D2C brands, SMBs, fast-moving startups</td><td>Swiggy, Meesho, consumer super-apps</td><td>Enterprises, fintechs, banks, platforms</td></tr>
-        <tr><td>Engineering team needed</td><td>1–2 backend devs</td><td>Backend + mobile team</td><td>Dedicated payments team</td></tr>
-        <tr><td>UI customisation</td><td>Logo, colors, payment methods via dashboard</td><td>Unlimited — full UI ownership</td><td>Unlimited — Juspay is invisible</td></tr>
-        <tr><td>Core integration concept</td><td>Create session → redirect → verify on return</td><td>Init SDK → build UI → call process() → handle callbacks</td><td>POST /orders → POST /txns → handle webhooks → verify</td></tr>
-        <tr><td>Technical writer's primary deliverable</td><td>Integration guide + dashboard config reference</td><td>SDK reference + event docs + platform install guides</td><td>Full REST API reference + webhook guide + code samples</td></tr>
-      </tbody>
-    </table>
+    <div class="steps-block">
+      <div class="block-label">Integration steps</div>
+      <div class="steps-list">
+        <div class="step-row"><div class="step-n sn-b">1</div><div class="step-body"><strong>Add SDK to your project</strong><p>Android: <code>build.gradle</code>. iOS: CocoaPods / SPM. React Native / Flutter: install the plugin package.</p></div></div>
+        <div class="step-row"><div class="step-n sn-b">2</div><div class="step-body"><strong>Initialise SDK on app start</strong><p>Call <code>HyperServices.initiate()</code> with your merchant ID. Prefetches data to reduce checkout latency.</p></div></div>
+        <div class="step-row"><div class="step-n sn-b">3</div><div class="step-body"><strong>Create a session (backend)</strong><p>Your server calls Juspay. Pass the <code>client_auth_token</code> from the response down to the SDK.</p></div></div>
+        <div class="step-row"><div class="step-n sn-b">4</div><div class="step-body"><strong>Build your payment screen</strong><p>Design and code your UI — UPI input, saved cards, wallet options. 100% your team's work.</p></div></div>
+        <div class="step-row"><div class="step-n sn-b">5</div><div class="step-body"><strong>Call process() on submit</strong><p>When user confirms, call <code>HyperServices.process(payload)</code> with the chosen method as JSON.</p></div></div>
+        <div class="step-row"><div class="step-n sn-b">6</div><div class="step-body"><strong>Handle event callbacks</strong><p>Listen on <code>onEvent</code> for <code>show_loader</code>, <code>hide_loader</code>, <code>payment_result</code>. Update your UI accordingly.</p></div></div>
+        <div class="step-row"><div class="step-n sn-b">7</div><div class="step-body"><strong>Verify on your backend</strong><p>Always confirm status via <code>GET /order/{id}</code> server-side before fulfilling the order.</p></div></div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
+<hr class="divider">
+
+<!-- ── PRODUCT 03: EXPRESS CHECKOUT API ── -->
+<section id="api" class="prod-section">
+  <div class="ps-head">
+    <div class="ps-left">
+      <div class="ps-num">PRODUCT / 03</div>
+      <div class="ps-tag ps-tag-a">API-first · Full ownership</div>
+      <h2 class="ps-title">Express Checkout API</h2>
+      <p class="ps-desc">Pure REST APIs. No SDK, no Juspay UI. You own the entire stack — screens, payment state machine, retry logic, error handling. Juspay is purely a backend payment processor you call over HTTPS.</p>
+      <div class="ps-pills" style="margin-top:28px">
+        <span class="ps-pill pill-a">Maximum control</span>
+        <span class="ps-pill pill-a">Platform agnostic</span>
+        <span class="ps-pill pill-n">High engineering effort</span>
+        <span class="ps-pill pill-n">Handle all edge cases</span>
+      </div>
+    </div>
+    <div class="ps-right">
+      <div class="ps-analogy">
+        <div class="ps-analogy-label">Analogy</div>
+        <p>Like <strong>building your own restaurant completely.</strong> Kitchen, staff, décor, menu — all yours. Juspay is the ingredient supplier you call via API. Everything the customer sees is built by you.</p>
+      </div>
+      <div class="ps-meta">
+        <div class="pm"><div class="pm-k">Platforms</div><div class="pm-v">Any — web, mobile, kiosk, server</div></div>
+        <div class="pm"><div class="pm-k">Time to launch</div><div class="pm-v">Weeks to months</div></div>
+        <div class="pm"><div class="pm-k">UI ownership</div><div class="pm-v">100% yours · Juspay invisible</div></div>
+        <div class="pm"><div class="pm-k">Best for</div><div class="pm-v">Enterprises · Fintechs · Banks</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ps-body">
+    <div class="flow-block">
+      <div class="block-label">How payment flows</div>
+      <div class="flow-list">
+        <div class="flow-row">
+          <div class="flow-icon fi-n">U</div>
+          <div class="flow-text"><strong>Customer fills your payment form</strong><span>Entirely your-built UI — every input, label, and button is yours.</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-icon fi-a">M</div>
+          <div class="flow-text"><strong>Your backend calls Juspay REST API</strong><span>Server-to-server <code>POST /txns</code> with payment method details. Juspay never touches your frontend.</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-icon fi-a">J</div>
+          <div class="flow-text"><strong>Juspay routes to the best acquirer</strong><span>If 3DS is needed, the response contains an <code>authentication.url</code> for your frontend to redirect to.</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-icon fi-a">B</div>
+          <div class="flow-text"><strong>Bank processes · posts back to Juspay</strong><span>After auth, bank posts result to Juspay. Juspay fires a signed webhook to your endpoint.</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-icon fi-n">M</div>
+          <div class="flow-text"><strong>Your backend receives webhook · fulfils</strong><span>Verify HMAC signature. Call <code>GET /orders/{id}</code> to confirm. Then update order state.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-block">
+      <div class="block-label">Integration steps</div>
+      <div class="steps-list">
+        <div class="step-row"><div class="step-n sn-a">1</div><div class="step-body"><strong>Set up authentication</strong><p>Get <code>merchant_id</code> + <code>api_key</code> from the dashboard. All calls use HTTP Basic Auth.</p></div></div>
+        <div class="step-row"><div class="step-n sn-a">2</div><div class="step-body"><strong>Create an order</strong><p>Call <code>POST /orders</code> to register the order. This ties all payment attempts to a single trackable object.</p></div></div>
+        <div class="step-row"><div class="step-n sn-a">3</div><div class="step-body"><strong>Initiate a transaction</strong><p>Call <code>POST /txns</code>. Payload varies: cards need number + CVV (or token), UPI collect needs VPA, netbanking needs bank code.</p></div></div>
+        <div class="step-row"><div class="step-n sn-a">4</div><div class="step-body"><strong>Handle 3DS / bank redirects</strong><p>If response has <code>authentication.url</code>, redirect the user there. Juspay posts a webhook after the bank responds.</p></div></div>
+        <div class="step-row"><div class="step-n sn-a">5</div><div class="step-body"><strong>Configure webhook endpoint</strong><p>Register your URL in the dashboard. Verify HMAC signature on every event before updating order state.</p></div></div>
+        <div class="step-row"><div class="step-n sn-a">6</div><div class="step-body"><strong>Confirm status & fulfil</strong><p>Call <code>GET /orders/{id}</code> server-side — source of truth. Webhooks can arrive out of order.</p></div></div>
+        <div class="step-row"><div class="step-n sn-a">7</div><div class="step-body"><strong>Implement refunds</strong><p>Call <code>POST /orders/{id}/refunds</code>. Partial refunds supported — pass any amount ≤ original charge.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── COMPARE TABLE ── -->
+<section class="compare" id="compare">
+  <div class="compare-inner">
+    <div class="compare-head">
+      <div class="ey">Side-by-side</div>
+      <h2>Compare all three products</h2>
+      <p>The quickest reference for picking the right integration path</p>
+    </div>
+    <div class="tbl-wrap">
+      <div class="tbl-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th class="tc-g">HyperCheckout</th>
+              <th class="tc-b">Express Checkout SDK</th>
+              <th class="tc-a">Express Checkout API</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Merchant builds UI?</td><td><span class="cx">✕</span> Juspay hosts it</td><td><span class="ck">✓</span> 100% custom screens</td><td><span class="ck">✓</span> Every pixel</td></tr>
+            <tr><td>Handles payment logic?</td><td><span class="cx">✕</span> Never</td><td><span class="cx">✕</span> SDK does it</td><td><span class="ck">✓</span> Fully</td></tr>
+            <tr><td>Platform support</td><td>Web, Android, iOS</td><td>Android, iOS, RN, Flutter</td><td>Any platform</td></tr>
+            <tr><td>Time to first payment</td><td>Hours to 1 day</td><td>Days to a few weeks</td><td>Weeks to months</td></tr>
+            <tr><td>Engineering effort</td><td>1–2 backend devs</td><td>Backend + mobile team</td><td>Dedicated payments team</td></tr>
+            <tr><td>UI customisation</td><td>Logo, colours, methods via dashboard</td><td>Unlimited — full UI ownership</td><td>Unlimited — Juspay is invisible</td></tr>
+            <tr><td>Core concept</td><td>Session → redirect → verify</td><td>Init SDK → build UI → process() → callback</td><td>POST /orders → POST /txns → webhook → verify</td></tr>
+            <tr><td>Typical merchant</td><td>D2C brands, SMBs</td><td>Swiggy, Meesho, super-apps</td><td>Enterprises, fintechs, banks</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <div class="footer-left">
-    <div class="logo-mark" style="width:26px;height:26px;border-radius:6px"><svg viewBox="0 0 18 18" fill="none" style="width:14px;height:14px"><rect x="2" y="2" width="6" height="6" rx="1.5" fill="white"/><rect x="10" y="2" width="6" height="6" rx="1.5" fill="white" opacity=".7"/><rect x="2" y="10" width="6" height="6" rx="1.5" fill="white" opacity=".7"/><rect x="10" y="10" width="6" height="6" rx="1.5" fill="white" opacity=".35"/></svg></div>
-    <p>Juspay Checkout Suite · Internal reference · Technical Writing team</p>
+  <div class="f-left">
+    <div class="n-mark" style="width:26px;height:26px;border-radius:6px;flex-shrink:0">
+      <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px">
+        <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.5" fill="white"/>
+        <rect x="9" y="1.5" width="5.5" height="5.5" rx="1.5" fill="white" opacity=".65"/>
+        <rect x="1.5" y="9" width="5.5" height="5.5" rx="1.5" fill="white" opacity=".65"/>
+        <rect x="9" y="9" width="5.5" height="5.5" rx="1.5" fill="white" opacity=".3"/>
+      </svg>
+    </div>
+    <p>Juspay Checkout Suite · Technical Writing reference</p>
   </div>
-  <div class="footer-links">
+  <div class="f-links">
     <a href="#hc">HyperCheckout</a>
     <a href="#sdk">Express SDK</a>
     <a href="#api">Express API</a>
@@ -543,12 +638,22 @@ footer{border-top:1px solid var(--bdr);padding:36px 48px;display:flex;align-item
 </footer>
 
 <script>
-const cards=document.querySelectorAll('.product-card');
-const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})},{threshold:0.06});
-cards.forEach(c=>io.observe(c));
-const navLinks=document.querySelectorAll('.nav-link');
-const ids=['hc','sdk','api','compare'];
-window.addEventListener('scroll',()=>{let cur=ids[0];ids.forEach(id=>{const el=document.getElementById(id);if(el&&scrollY>=el.offsetTop-90)cur=id});navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur))},{passive:true});
+// scroll reveal
+const io = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('vis'); io.unobserve(x.target); }}), {threshold:0.05});
+document.querySelectorAll('.prod-section').forEach(s => io.observe(s));
+
+// nav active link
+const links = document.querySelectorAll('.n-link');
+const sids = ['hc','sdk','api','compare'];
+window.addEventListener('scroll', () => {
+  let cur = sids[0];
+  sids.forEach(id => { const el = document.getElementById(id); if(el && scrollY >= el.offsetTop - 100) cur = id; });
+  links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#'+cur));
+}, {passive:true});
+
+// mobile menu
+function toggleMenu(){ document.body.classList.toggle('mob-open'); }
+function closeMenu(){ document.body.classList.remove('mob-open'); }
 </script>
 </body>
 </html>
