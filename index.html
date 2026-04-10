@@ -161,7 +161,117 @@ footer{border-top:1px solid var(--bdr);padding:36px 48px;display:flex;align-item
 .footer-links a:hover{color:var(--txt)}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:768px){nav{padding:0 20px}.nav-center{display:none}.hero,.spectrum,.products,.compare-section{padding-left:20px;padding-right:20px}.hero{padding-top:60px}.card-body{grid-template-columns:1fr}.card-left{border-right:none;border-bottom:1px solid var(--bdr)}.stats-strip{gap:32px;padding:24px 20px}footer{padding:28px 20px}}
+
+/* ── TABLET ── */
+@media(max-width:900px){
+  .nav-badge{display:none}
+  .hero{padding:80px 32px 60px}
+  .spectrum{padding:0 32px;margin-bottom:48px}
+  .products,.compare-section{padding-left:32px;padding-right:32px}
+  .stats-strip{gap:40px;padding:24px 32px}
+  footer{padding:28px 32px}
+}
+
+/* ── MOBILE ── */
+@media(max-width:680px){
+
+  /* NAV */
+  nav{padding:0 16px;height:54px}
+  .nav-center{display:none}
+  .nav-badge{display:none}
+  .btn-nav{padding:7px 14px;font-size:12px}
+  .btn-nav svg{display:none}
+
+  /* HERO */
+  .hero{padding:56px 16px 48px}
+  .hero-glow{width:300px;height:200px}
+  .hero h1{font-size:clamp(28px,8vw,40px);letter-spacing:-.015em}
+  .hero p{font-size:15px}
+  .hero-actions{flex-direction:column;align-items:center;gap:10px}
+  .btn-primary,.btn-ghost{width:100%;max-width:280px;justify-content:center}
+
+  /* SPECTRUM */
+  .spectrum{padding:0 16px;margin-bottom:40px}
+  .spec-track{flex-direction:column;height:auto;border-radius:var(--rmd)}
+  .spec-seg{padding:14px 16px;justify-content:flex-start;border-right:none !important;border-bottom:1px solid var(--bdr)}
+  .spec-seg:last-child{border-bottom:none}
+  .spec-ends{font-size:10px}
+
+  /* STATS */
+  .stats-strip{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0}
+  .stat-item{padding:20px 16px;border-right:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+  .stat-item:nth-child(2){border-right:none}
+  .stat-item:nth-child(3){border-bottom:none}
+  .stat-item:nth-child(4){border-right:none;border-bottom:none}
+  .stat-num{font-size:22px}
+
+  /* PRODUCTS */
+  .products{padding:0 16px 64px}
+  .product-card{border-radius:var(--rlg);margin-bottom:16px}
+  .card-header{padding:18px 18px 0;gap:10px}
+  .card-num{font-size:10px}
+  .card-body{grid-template-columns:1fr}
+  .card-left{padding:18px 18px 20px;border-right:none;border-bottom:1px solid var(--bdr)}
+  .card-right{padding:18px 18px 20px}
+  .card-title{font-size:22px}
+  .card-desc{font-size:13px}
+  .analogy-pill{padding:12px 14px}
+  .a-icon{font-size:18px}
+  .meta-row{grid-template-columns:1fr 1fr;gap:6px}
+  .meta-cell{padding:9px 10px}
+
+  /* FLOW NODES — horizontal scroll on mobile */
+  .flow-nodes{
+    display:flex;flex-wrap:nowrap;
+    overflow-x:auto;overflow-y:visible;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+    gap:0;padding-bottom:8px;
+    margin-left:-18px;margin-right:-18px;
+    padding-left:18px;padding-right:18px;
+  }
+  .flow-nodes::-webkit-scrollbar{height:3px}
+  .flow-nodes::-webkit-scrollbar-track{background:transparent}
+  .flow-nodes::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:2px}
+  .fn{scroll-snap-align:start;min-width:76px}
+  .fn-box{font-size:10px;padding:6px 8px}
+  .fn-sub{font-size:9px;max-width:76px}
+  .fn-arrow{font-size:12px;padding:0 2px}
+
+  /* OWN BAR */
+  .own-bar{height:24px}
+  .ob-seg{font-size:9px}
+  .own-legend{gap:10px}
+  .ol-item{font-size:10px}
+
+  /* STEPS */
+  .step{padding:9px 0;gap:10px}
+  .step-n{width:18px;height:18px;font-size:9px}
+  .step-info strong{font-size:12px}
+  .step-info p{font-size:11px}
+
+  /* COMPARE */
+  .compare-section{padding:0 16px 64px}
+  .section-heading h2{font-size:24px}
+  .compare-wrap{border-radius:var(--rlg);overflow-x:auto}
+  .compare-table{min-width:560px;font-size:12px}
+  .compare-table th{padding:12px 14px;font-size:12px}
+  .compare-table th:first-child{font-size:10px}
+  .compare-table td{padding:11px 14px;font-size:11px}
+
+  /* FOOTER */
+  footer{padding:24px 16px;flex-direction:column;align-items:flex-start;gap:16px}
+  .footer-links{flex-wrap:wrap;gap:14px}
+}
+
+/* ── VERY SMALL ── */
+@media(max-width:380px){
+  .hero h1{font-size:26px}
+  .meta-row{grid-template-columns:1fr}
+  .stats-strip{grid-template-columns:1fr}
+  .stat-item{border-right:none !important}
+  .stat-item:last-child{border-bottom:none !important}
+}
 </style>
 </head>
 <body>
@@ -393,6 +503,7 @@ footer{border-top:1px solid var(--bdr);padding:36px 48px;display:flex;align-item
     <p>The single most useful reference for picking the right integration path</p>
   </div>
   <div class="compare-wrap">
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
     <table class="compare-table">
       <thead>
         <tr>
@@ -414,6 +525,7 @@ footer{border-top:1px solid var(--bdr);padding:36px 48px;display:flex;align-item
         <tr><td>Technical writer's primary deliverable</td><td>Integration guide + dashboard config reference</td><td>SDK reference + event docs + platform install guides</td><td>Full REST API reference + webhook guide + code samples</td></tr>
       </tbody>
     </table>
+    </div>
   </div>
 </div>
 
